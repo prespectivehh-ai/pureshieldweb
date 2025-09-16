@@ -232,10 +232,6 @@
     </section>
   </main>
 
-<<<<<<< HEAD
-  <!-- Footer -->
-  <footer id="contact">
-=======
   <section id="contact">
   <div class="container contact">
     <!-- Form card -->
@@ -312,7 +308,6 @@
 
   <!-- Footer -->
   <footer id="site-footer">
->>>>>>> 89821c7 (add contact form)
     <div class="container foot">
       <div>
         <h2>Contact Us</h2>
@@ -381,32 +376,6 @@
     </div>
   </dialog>
 
-<<<<<<< HEAD
-  <!-- Tiny JS (kept inline so you only manage one CSS file) -->
-  <script>
-    // Mobile nav
-    const nav = document.getElementById('nav');
-    document.getElementById('mobileToggle').addEventListener('click', () => {
-      nav.classList.toggle('is-open');
-    });
-
-    // Year stamp
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Privacy modal
-    const dialog = document.getElementById('privacyDialog');
-    document.getElementById('openPrivacy').addEventListener('click', (e)=>{e.preventDefault(); dialog.showModal();});
-    document.getElementById('closePrivacy').addEventListener('click', ()=> dialog.close());
-
-    // Contact form (demo validation)
-    const f = document.getElementById('contactForm');
-    const status = document.getElementById('formStatus');
-    const setErr = (id,msg)=>{ const el = document.querySelector(`[data-error-for="${id}"]`); if(el){el.textContent = msg||'';} };
-
-    f.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      status.classList.remove('hide');
-=======
   <script>
   // Mobile nav
   const nav = document.getElementById('nav');
@@ -434,7 +403,6 @@
       status.textContent = 'Sending…';
 
       // basic validation
->>>>>>> 89821c7 (add contact form)
       let ok = true;
       const name = f.name.value.trim();
       const phone = f.phone.value.trim();
@@ -443,34 +411,6 @@
 
       setErr('name',''); setErr('phone',''); setErr('email',''); setErr('service','');
 
-<<<<<<< HEAD
-      if(!name){ setErr('name','Please enter a name.'); ok=false; }
-      if(!/\d{3}.*\d{3}.*\d{4}/.test(phone)){ setErr('phone','Please enter a valid phone.'); ok=false; }
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('email','Please enter a valid email.'); ok=false; }
-      if(!service){ setErr('service','Please choose a service.'); ok=false; }
-
-      if(!ok){ status.classList.add('hide'); return; }
-
-      // Example: send to Formspree/your API (uncomment & replace)
-      // await fetch('https://formspree.io/f/your-id', {
-      //   method:'POST', headers:{'Content-Type':'application/json'},
-      //   body: JSON.stringify({name, phone, email, service, message: f.message.value})
-      // });
-
-      await new Promise(r=>setTimeout(r,800)); // demo delay
-      status.textContent='Request sent! We will call you shortly.';
-      f.reset();
-      setTimeout(()=>{ status.classList.add('hide'); status.textContent='Sending…'; }, 4000);
-    });
-
-    // Newsletter demo
-    document.getElementById('newsletter').addEventListener('submit', (e)=>{
-      e.preventDefault();
-      alert('Thanks for subscribing! Replace this with your email provider integration.');
-      e.target.reset();
-    });
-  </script>
-=======
       if (!name){ setErr('name','Please enter a name.'); ok=false; }
       if (!/\d{3}.*\d{3}.*\d{4}/.test(phone)){ setErr('phone','Please enter a valid phone.'); ok=false; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('email','Please enter a valid email.'); ok=false; }
@@ -517,6 +457,5 @@
     });
   }
 </script>
->>>>>>> 89821c7 (add contact form)
 </body>
 </html>
