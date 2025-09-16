@@ -232,8 +232,87 @@
     </section>
   </main>
 
+<<<<<<< HEAD
   <!-- Footer -->
   <footer id="contact">
+=======
+  <section id="contact">
+  <div class="container contact">
+    <!-- Form card -->
+    <div class="contact-card">
+      <h2>Request Care</h2>
+
+      <form id="contactForm" novalidate>
+        <div class="row">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" name="name" autocomplete="name" required />
+            <div class="error" data-error-for="name"></div>
+          </div>
+
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" inputmode="tel" placeholder="(949) 202-5309" required />
+            <div class="error" data-error-for="phone"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <div class="error" data-error-for="email"></div>
+          </div>
+
+          <div>
+            <label for="service">Service needed</label>
+            <select id="service" name="service" required>
+              <option value="">Choose…</option>
+              <option>Skilled Nursing</option>
+              <option>Physical Therapy</option>
+              <option>Occupational Therapy</option>
+              <option>Speech Therapy</option>
+              <option>Home Health Aide</option>
+              <option>Medical Social Work</option>
+            </select>
+            <div class="error" data-error-for="service"></div>
+          </div>
+        </div>
+
+        <label for="message">Tell us a little about your needs</label>
+        <textarea id="message" name="message" rows="5" placeholder="Condition, physician, best callback time, address/city…"></textarea>
+
+        <!-- Honeypot for spam bots (leave blank) -->
+        <input type="text" name="website" class="hide" tabindex="-1" autocomplete="off" />
+
+        <!-- Optional metadata -->
+        <input type="hidden" name="_subject" value="New Home Health Inquiry" />
+        <input type="hidden" name="source" value="Website contact form" />
+
+        <div class="cta-row">
+          <button class="btn" type="submit">Send request</button>
+          <span id="formStatus" class="help hide">Sending…</span>
+        </div>
+      </form>
+
+      <p class="help">We never share your info. By submitting, you agree to be contacted about your request.</p>
+    </div>
+
+    <!-- Helpful contact card -->
+    <div class="contact-card">
+      <h3>Prefer to call?</h3>
+      <p>
+        📞 <a href="tel:+19492025309">(949) 202-5309</a><br/>
+        ✉️ <a href="mailto:contact@directcarecenter.com">contact@directcarecenter.com</a><br/>
+        📍 13071 Brookhurst St., Suite 210/1, Garden Grove, CA 92843
+      </p>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+>>>>>>> 89821c7 (add contact form)
     <div class="container foot">
       <div>
         <h2>Contact Us</h2>
@@ -302,6 +381,7 @@
     </div>
   </dialog>
 
+<<<<<<< HEAD
   <!-- Tiny JS (kept inline so you only manage one CSS file) -->
   <script>
     // Mobile nav
@@ -326,6 +406,35 @@
     f.addEventListener('submit', async (e)=>{
       e.preventDefault();
       status.classList.remove('hide');
+=======
+  <script>
+  // Mobile nav
+  const nav = document.getElementById('nav');
+  document.getElementById('mobileToggle').addEventListener('click', () => {
+    nav.classList.toggle('is-open');
+  });
+
+  // Year stamp
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Privacy modal
+  const dialog = document.getElementById('privacyDialog');
+  document.getElementById('openPrivacy').addEventListener('click', (e)=>{e.preventDefault(); dialog.showModal();});
+  document.getElementById('closePrivacy').addEventListener('click', ()=> dialog.close());
+
+  // ---------- Contact form (AJAX to Formspree) ----------
+  const f = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  const setErr = (id,msg)=>{ const el = document.querySelector(`[data-error-for="${id}"]`); if(el){el.textContent = msg||'';} };
+
+  if (f) {
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.remove('hide');
+      status.textContent = 'Sending…';
+
+      // basic validation
+>>>>>>> 89821c7 (add contact form)
       let ok = true;
       const name = f.name.value.trim();
       const phone = f.phone.value.trim();
@@ -334,6 +443,7 @@
 
       setErr('name',''); setErr('phone',''); setErr('email',''); setErr('service','');
 
+<<<<<<< HEAD
       if(!name){ setErr('name','Please enter a name.'); ok=false; }
       if(!/\d{3}.*\d{3}.*\d{4}/.test(phone)){ setErr('phone','Please enter a valid phone.'); ok=false; }
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('email','Please enter a valid email.'); ok=false; }
@@ -360,5 +470,53 @@
       e.target.reset();
     });
   </script>
+=======
+      if (!name){ setErr('name','Please enter a name.'); ok=false; }
+      if (!/\d{3}.*\d{3}.*\d{4}/.test(phone)){ setErr('phone','Please enter a valid phone.'); ok=false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('email','Please enter a valid email.'); ok=false; }
+      if (!service){ setErr('service','Please choose a service.'); ok=false; }
+
+      // honeypot (anti-spam)
+      if (f.website && f.website.value){ return; }
+
+      if (!ok){ status.classList.add('hide'); return; }
+
+      try {
+        // 🔁 REPLACE with your Formspree endpoint ID
+        const FORM_ENDPOINT = 'https://formspree.io/f/mvgbjkwn'; // <-- put your ID here
+
+        const data = new FormData(f);
+        const resp = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+
+        if (resp.ok) {
+          status.textContent = 'Request sent! We will contact you shortly.';
+          f.reset();
+        } else {
+          const j = await resp.json().catch(()=> ({}));
+          status.textContent = j?.errors?.[0]?.message || 'Something went wrong. Please call or email us.';
+        }
+      } catch {
+        status.textContent = 'Network error. Please call or email us.';
+      } finally {
+        setTimeout(()=> status.classList.add('hide'), 4000);
+      }
+    });
+  }
+
+  // Protect newsletter handler if the form is commented out
+  const newsletter = document.getElementById('newsletter');
+  if (newsletter) {
+    newsletter.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Thanks for subscribing!');
+      e.target.reset();
+    });
+  }
+</script>
+>>>>>>> 89821c7 (add contact form)
 </body>
 </html>
